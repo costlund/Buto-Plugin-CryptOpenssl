@@ -1,0 +1,37 @@
+<?php
+class PluginCryptOpenssl{
+  public $data = null;
+  function __construct() {
+    $data = new PluginWfArray();
+    $data->set('data', '_change_this_data_');
+    $data->set('cipher_algo', 'AES-128-CTR');
+    $data->set('options', 0);
+    $data->set('iv', 'abcdefghijklmnop'); // Must be 16 characters.
+    $data->set('passphrase', '123456');
+    $data->set('encryption', null);
+    $data->set('decryption', null);
+    $this->data = $data;
+  }
+  public function encrypt($data = null, $passphrase = null){
+    if($data){
+      $this->data->set('data', $data);
+    }
+    if($passphrase){
+      $this->data->set('passphrase', $passphrase);
+    }
+    $encryption = openssl_encrypt($this->data->get('data'), $this->data->get('cipher_algo'), $this->data->get('passphrase'), $this->data->get('options'), $this->data->get('iv'));
+    $this->data->set('encryption', $encryption);
+    return $encryption;
+  }
+  public function decrypt($encryption = null, $passphrase = null){
+    if($encryption){
+      $this->data->set('encryption', $encryption);
+    }
+    if($passphrase){
+      $this->data->set('passphrase', $passphrase);
+    }
+    $decryption = openssl_decrypt($this->data->get('encryption'), $this->data->get('cipher_algo'), $this->data->get('passphrase'), $this->data->get('options'), $this->data->get('iv'));
+    $this->data->set('decryption', $decryption);
+    return $decryption;
+  }
+}
