@@ -2,6 +2,7 @@
 class PluginCryptOpenssl{
   public $data = null;
   function __construct() {
+    wfPlugin::includeonce('wf/array');
     $data = new PluginWfArray();
     $data->set('data', '_change_this_data_');
     $data->set('cipher_algo', 'AES-128-CTR');

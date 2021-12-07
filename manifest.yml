@@ -1,20 +1,22 @@
-manifest:
-  version: 1.0.0
-  history:
-    1.0.0:
-      date: '2021-12-07'
-      title: 'First version'
-      description: 'First version. Manifest created.'
-  plugin: {  }
-  sys:
-    -
-      name: mercury
-      version:
-        - 2.46.1
-  php:
+version: 1.0.0
+history:
+  1.0.0:
+    date: '2021-12-07'
+    title: 'First version'
+    description: 'First version. Manifest created.'
+plugin:
+  -
+    name: wf/array
+    version: 1.2.2
+sys:
+  -
+    name: mercury
     version:
-      - 7.4.21
-  author: null
-  links: null
-  description: ''
-  third_part_software: null
+      - 2.47.0
+php:
+  version:
+    - 7.4.21
+author: null
+links: null
+description: ''
+third_part_software: null
