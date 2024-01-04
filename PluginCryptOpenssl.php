@@ -35,4 +35,30 @@ class PluginCryptOpenssl{
     $this->data->set('decryption', $decryption);
     return $decryption;
   }
+  public function decrypt_from_key($value){
+    if(substr((string) $value, 0, 6)=='crypt:'){
+      $key = wfCrypt::getKey();
+      if($key){
+        return $this->decrypt(substr((string) $value, 6), $key);
+      }else{
+        throw new Exception(__CLASS__." says: No crypt key exist!");
+      }
+    }else{
+      return $value;
+    }
+  }
+  public function page_encrypt(){
+    $data = new PluginWfArray();
+    $data->set('key', wfCrypt::getKey());
+    $data->set('value', wfRequest::get('value'));
+    $data->set('result', $this->encrypt($data->get('value'), $data->get('key')));
+    wfHelp::print($data);
+  }
+  public function page_decrypt(){
+    $data = new PluginWfArray();
+    $data->set('key', wfCrypt::getKey());
+    $data->set('value', wfRequest::get('value'));
+    $data->set('result', $this->decrypt($data->get('value'), $data->get('key')));
+    wfHelp::print($data);
+  }
 }
